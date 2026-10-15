@@ -8,7 +8,6 @@ fun main(args: Array<String>) {
     exitProcess(runApplication(args))
 }
 
-/** Ready entry point. Students implement the handlers in Commands.kt. */
 fun runApplication(
     args: Array<String>,
     handlers: CommandHandlers = StudentCommandHandlers,

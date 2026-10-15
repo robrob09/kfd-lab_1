@@ -3,7 +3,6 @@ package schedule
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
-/** CLI labels. The domain model is a separate student task. */
 enum class SessionType { LECTURE, PRACTICE, EXAM, CANCELLED }
 
 sealed interface Command {
@@ -21,7 +20,6 @@ sealed interface Command {
 
 class InvalidArgumentsException : IllegalArgumentException("Invalid arguments")
 
-/** Only command-line arguments are parsed here, never schedule file contents. */
 fun parseCommand(args: Array<String>): Command {
     val name = args.firstOrNull() ?: throw InvalidArgumentsException()
     val required = when (name) {

@@ -1,0 +1,10 @@
+0001-01-01|LECTURE|First year|Room 1|Ivanov
+9999-12-31|EXAM|Last year|Room 2|Ivanov,ivanov
+2026-10-05|CANCELLED|Postponed|-|-
+2026-13-45|SEMINAR|Topic|Room 1|Ivanov
+2026-10-05|EXAM|Topic|Room 1|Ivanov,Ivanov
+2026-10-05|LECTURE|Topic|Room 1|Ivanov,
+2026-10-05|LECTURE|Topic|Room 1|Ivanov, Petrov
+2026-10-05|CANCELLED|Topic|Room 1|-
+2026-10-05|LECTURE|Topic|Room 1|
+

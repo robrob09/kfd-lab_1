@@ -1,0 +1,8 @@
+line 4: invalid date "2026-13-45"
+line 5: duplicate teacher "Ivanov"
+line 6: invalid teacher ""
+line 7: surrounding whitespace in field "teachers": " Petrov"
+line 8: type "CANCELLED" requires "-" in field "location", got "Room 1"
+line 9: empty required field "teachers"
+line 10: invalid field separator
+Rejected: 7 of 10

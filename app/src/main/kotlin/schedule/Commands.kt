@@ -12,23 +12,46 @@ object StudentCommandHandlers : CommandHandlers {
     override fun errors(command: Command.Errors): Int = runErrors(command)
 }
 
-fun runPeriod(command: Command.Period): Int {
-    // TODO: parse every line of command.file, filter by command.from..command.to,
-    // print the selected sessions and Total, return 0 or 1.
-    println("Not implemented: period")
-    return 2
+fun runPeriod(command: Command.Period): Int = select(command.file, false) {
+    it.date in command.from..command.to
 }
 
-fun runType(command: Command.ByType): Int {
-    // TODO: parse every line of command.file, filter by command.type,
-    // print the selected sessions with teachers and Total, return 0 or 1.
-    println("Not implemented: type")
-    return 2
+fun runType(command: Command.ByType): Int = select(command.file, true) {
+    it.type == command.type
 }
 
 fun runErrors(command: Command.Errors): Int {
-    // TODO: parse every line of command.file, print formatted rejections
-    // and Rejected: K of M, return 0 or 1.
-    println("Not implemented: errors")
-    return 2
+    val (total, bad) = read(command.file) {
+        if (it is ParseResult.Rejected) println(formatError(it))
+    }
+    println("Rejected: $bad of $total")
+    return if (bad == 0L) 0 else 1
+}
+
+private fun select(file: String, teachers: Boolean, test: (Session) -> Boolean): Int {
+    var count = 0
+    val (_, bad) = read(file) {
+        if (it is ParseResult.Ok && test(it.session)) {
+            println(formatSession(it.session, teachers))
+            count++
+        }
+    }
+    println("Total: $count")
+    return if (bad == 0L) 0 else 1
+}
+
+private fun read(file: String, action: (ParseResult) -> Unit): Pair<Long, Long> {
+    val repo = AuditedSessionRepository(MemorySessionRepository())
+    var total = 0L
+    var bad = 0L
+    forEachScheduleLine(file) { n, line ->
+        total = n
+        val r = parseLine(n, line)
+        when (r) {
+            is ParseResult.Ok -> repo.add(r.session)
+            is ParseResult.Rejected -> bad++
+        }
+        action(r)
+    }
+    return total to bad
 }
